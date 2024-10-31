@@ -33,20 +33,20 @@ void addPerson(person *user){
     printf("----------------------------------\n");
 }
 
-void delete(person people[]){
+void delete(person *user){
     char input[MAX_LENGHT];
     printf("Enter surname which person you want to delete: \n");
     scanf("%s", &input);
     for(int i = 0; i<userCount;i++){
-        if(strcmp(people[i].surname, input) == 0){
-            strcpy(people[i].name, "");
-            strcpy(people[i].surname, "");
-            strcpy(people[i].phone, "");
-            strcpy(people[i].email, "");
-            strcpy(people[i].socialnetwork, "");
+        if(strcmp(user[i].surname, input) == 0){
+            strcpy(user[i].name, "");
+            strcpy(user[i].surname, "");
+            strcpy(user[i].phone, "");
+            strcpy(user[i].email, "");
+            strcpy(user[i].socialnetwork, "");
 
             for (int j = i; j < userCount - 1; j++) {
-                people[j] = people[j + 1];
+                user[j] = user[j + 1];
             }
             userCount--;
             printf("User deleted.\n");
@@ -54,35 +54,35 @@ void delete(person people[]){
     }
 }
 
-void editPerson(person people[]){
+void editPerson(person *user){
     char lastName[MAX_LENGHT];
     printf("Put surname: ");
-    scanf("%s", lastName);
+    scanf("%s", &lastName);
     getchar();
         for(int i = 0; i < MAX_LENGHT; i++){
-        if(strcmp(people[i].surname, lastName) == 0){
-            printf("Editing person: %s %s \n", people[i].name, people[i].surname);
+        if(strcmp(user[i].surname, lastName) == 0){
+            printf("Editing person: %s %s \n", user[i].name, user[i].surname);
             printf("Enter new phone(if needed): \n");
             getchar();
             char input[MAX_LENGHT];
             fgets(input, MAX_LENGHT, stdin);
             if(input[0] != '\n'){
-                strncpy(people[i].phone, input, MAX_LENGHT);
-                people[i].phone[strcspn(people[i].phone, "\n")] = '\0';
+                strncpy(user[i].phone, input, MAX_LENGHT);
+                user[i].phone[strcspn(user[i].phone, "\n")] = '\0';
             }
             
             printf("Enter new email(if needed): \n");
             fgets(input, MAX_LENGHT, stdin);
             if (input[0] != '\n') {
-                strncpy(people[i].email, input, MAX_LENGHT);
-                people[i].email[strcspn(people[i].email, "\n")] = '\0';
+                strncpy(user[i].email, input, MAX_LENGHT);
+                user[i].email[strcspn(user[i].email, "\n")] = '\0';
             }
             
             printf("Enter new socialnetwork(if needed): \n");
             fgets(input, MAX_LENGHT, stdin);
             if(input[0] != '\n'){
-                strncpy(people[i].socialnetwork, input, MAX_LENGHT);
-                people[i].socialnetwork[strcspn(people[i].socialnetwork, "\n")] = '\0';
+                strncpy(user[i].socialnetwork, input, MAX_LENGHT);
+                user[i].socialnetwork[strcspn(user[i].socialnetwork, "\n")] = '\0';
             }
             
             printf("Person updated.\n ");
@@ -90,27 +90,27 @@ void editPerson(person people[]){
     }
 }
 
-void trashDestroyer(person people[]){
-    memset(people, 0, sizeof(person) * MAX_LENGHT);
+void trashDestroyer(person *user){
+    memset(user, 0, sizeof(person) * MAX_LENGHT);
     for(int i = 0; i < MAX_LENGHT; i++){
-        people[i].name[0] = '\0';
-        people[i].name[0] = '\0';
-        people[i].surname[0] = '\0';
-        people[i].phone[0] = '\0';
-        people[i].socialnetwork[0] = '\0';
-        people[i].email[0] = '\0';
+        user[i].name[0] = '\0';
+        user[i].name[0] = '\0';
+        user[i].surname[0] = '\0';
+        user[i].phone[0] = '\0';
+        user[i].socialnetwork[0] = '\0';
+        user[i].email[0] = '\0';
     }
 }
 
-void listPerson(person people[]){
+void listPerson(person *user){
 
     for (int i = 0; i < userCount; i++) {
         printf("\nContact %d:\n", i + 1);
-        printf("First Name: %s\n", people[i].name);
-        printf("Last Name: %s\n", people[i].surname);
-        printf("Phone: %s\n", people[i].phone);
-        printf("Email: %s\n", people[i].email);
-        printf("Social Network: %s\n", people[i].socialnetwork);
+        printf("First Name: %s\n", user[i].name);
+        printf("Last Name: %s\n", user[i].surname);
+        printf("Phone: %s\n", user[i].phone);
+        printf("Email: %s\n", user[i].email);
+        printf("Social Network: %s\n", user[i].socialnetwork);
     }
 }
 
