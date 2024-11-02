@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #define MAX_LENGHT_STRUCT 2
 #define MAX_LENGHT 30
 
@@ -17,6 +18,8 @@ int userCount = 0;
 
 void addPerson(person *user){
     printf("----------------------------------\n");
+    printf("Enter which id you want: ");
+    scanf("%d",user[userCount].id);
     printf("Enter your name: ");
     scanf("%s",user[userCount].name);
     printf("Enter your surname: ");
