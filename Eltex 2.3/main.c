@@ -1,26 +1,28 @@
 #include <stdio.h>
 #include <stdarg.h>
+
+#define MAX_CHARLENGHT 128
  
-int sum(int count, ...){
-    int result = 0;
+double sum(int count, ...){
+    double result = 0;
     va_list factor;
     va_start(factor, count); 
     for(int i = 0; i < count; i++){
-        int value = va_arg(factor, int);
+        double value = va_arg(factor, double);
         result += value;
     }
     va_end(factor);
     return result;
 }
 
-int subtraction(int count, ...) {
+double subtraction(int count, ...) {
     va_list factor;
     va_start(factor, count);
 
-    int resultMinus = va_arg(factor, int);
+    double resultMinus = va_arg(factor, double);
     
     for (int i = 1; i < count; i++) {
-        int value = va_arg(factor, int);
+        double value = va_arg(factor, double);
         resultMinus -= value;
     }
     
@@ -28,12 +30,12 @@ int subtraction(int count, ...) {
     return resultMinus;
 }
 
-int multiplication(int count, ...){
-    int resultMultiplication = 1;
+double multiplication(int count, ...){
+    double resultMultiplication = 1;
     va_list factor;
     va_start(factor, count);
     for(int i = 0; i < count; i++){
-        int value = va_arg(factor, int);
+        double value = va_arg(factor, double);
         resultMultiplication *= value;
     }
     va_end(factor);
@@ -56,103 +58,52 @@ double division(int count, ...){
 }
 
 typedef struct Operation{
-    char name;
+    char name[MAX_CHARLENGHT];
     double (*function)(int n, ...);
 }Operation;
 
-double work(int expression){
+double work(int choice) {
     int count;
-    Operation operation[] =
-    {
+    Operation operation[] = {
         {"Sum", sum},
-        {"Subtraction",subtraction},
-        {"Multiplication",multiplication},
-        {"Division",division}
+        {"Subtraction", subtraction},
+        {"Multiplication", multiplication},
+        {"Division", division}
     };
+    
     printf("Enter count of numbers: ");
     scanf("%d", &count);
+
+    double numbers[count];
+    for (int i = 0; i < count; i++) {
+        printf("Enter number %d: ", i + 1);
+        scanf("%lf", &numbers[i]);
+    }
+    double result = operation[choice - 1].function(count, numbers[0], numbers[1], numbers[2], numbers[3], numbers[4]);
+    
+    return result;
 }
- 
-int main(){   
-    int expression, count;
-    while (1){
-    printf("\n1 - Sum\n2 - Subtaraction\n3 - Multiplication\n4 - Division\nChoose a function: ");
-    scanf("%d", &expression);
-    if(expression == 1){
-        printf("How many numbers you want to sum: ");
-        scanf("%d", &count);
-        int massive[count];
-        if(count == 2){
-            printf("Put that numbers: \n");
-            for(int i = 0; i < 2; i++){
-                printf("Put %d number: ", i + 1);
-                scanf("%d", &massive[i]);
-            }
-            printf("Result: %d", sum(2,massive[0],massive[1]));
+
+int main()
+{
+    int choice=0;
+    while (choice!=5)
+    {
+        printf("------------------------------------------\n");
+        printf("Choose operation:\n");
+        printf("1.Sum\n2.Subtraction\n3.Multiplication\n4.Division\n5.Exit\n");
+        scanf("%d", &choice);
+        printf("------------------------------------------\n");
+        getchar();
+        if (choice >= 1 && choice <= 4) 
+        {
+            double result = work(choice);
+            printf("%lf\n",result);
         }
-            if(count == 3){
-                printf("Put that numbers: \n");
-                for(int i = 0; i < 3; i++){
-                    printf("Put %d number: ", i + 1);
-                    scanf("%d", &massive[i]);
-                }
-                printf("Result: %d", sum(3,massive[0],massive[1],massive[2]));
+        else if (choice != 5)
+        {
+            printf("Invalid choice!\n");
         }
     }
-    if(expression == 2){
-        printf("How many numbers you want to subtraction: ");
-        scanf("%d", &count);
-        int massive[count];
-        if(count == 2){
-            printf("Put that numbers: \n");
-            for(int i = 0; i < 2; i++){
-                printf("Put %d number: ", i + 1);
-                scanf("%d", &massive[i]);
-            }
-            printf("Result: %d\n", subtraction(2,massive[0],massive[1]));
-        }
-            if(count == 3){
-                printf("Put that numbers: \n");
-                for(int i = 0; i < 3; i++){
-                    printf("Put %d number: ", i + 1);
-                    scanf("%d", &massive[i]);
-                }
-                printf("Result: %d\n", subtraction(3,massive[0],massive[1],massive[2]));
-        }
-    }
-    if(expression == 3){
-        printf("How many numbers you want to subtraction: ");
-        scanf("%d", &count);
-        int massive[count];
-        if(count == 2){
-            printf("Put that numbers: \n");
-            for(int i = 0; i < 2; i++){
-                printf("Put %d number: ", i + 1);
-                scanf("%d", &massive[i]);
-            }
-            printf("Result: %d\n", multiplication(2,massive[0],massive[1]));
-        }
-        if(count == 3){
-            printf("Put that numbers: \n");
-            for(int i = 0; i < 2; i++){
-                printf("Put %d number: ", i + 1);
-                scanf("%d", &massive[i]);
-            }
-            printf("Result: %d\n", multiplication(3,massive[0],massive[1],massive[2]));
-        }
-    }
-    if(expression == 4){
-        printf("How many numbers you want to division: ");
-        scanf("%d", &count);
-        double massive[count];
-        if(count == 2){
-            printf("Put that numbers: \n");
-            for(int i = 0; i < 2; i++){
-                printf("Put %d number: ", i + 1);
-                scanf("%lf", &massive[i]);
-            }
-            printf("Result: %lf\n", division(2,massive[0],massive[1]));
-        }
-    }
-    }
+    return 0;
 }
