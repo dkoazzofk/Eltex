@@ -7,7 +7,6 @@
 int main() {
     Node* head = NULL;
     int choice;
-    void *handle = dlopen("./libmylibrary.so", RTLD_LAZY);
     do {
         printf("\n1. Add Person\n2. Delete Person\n3. Edit Person\n4. List Persons\n5. Exit\nChoose an option: ");
         scanf("%d", &choice);
@@ -33,6 +32,5 @@ int main() {
                 printf("Invalid option.\n");
         }
     } while (choice != 5);
-    dlclose(handle);
     return 0;
 }
