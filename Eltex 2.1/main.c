@@ -19,17 +19,17 @@ int userCount = 0;
 void addPerson(person *user){
     printf("----------------------------------\n");
     printf("Enter which id you want: ");
-    scanf("%d",user[userCount].id);
+    scanf("%d",&user[userCount].id);
     printf("Enter your name: ");
-    scanf("%s",user[userCount].name);
+    scanf("%s",&user[userCount].name);
     printf("Enter your surname: ");
-    scanf("%s",user[userCount].surname);
+    scanf("%s",&user[userCount].surname);
     printf("Enter your phone: ");
-    scanf("%s",user[userCount].phone);
+    scanf("%s",&user[userCount].phone);
     printf("Enter your email: ");
-    scanf("%s",user[userCount].email);
+    scanf("%s",&user[userCount].email);
     printf("Enter your socialnetwork: ");
-    scanf("%s",user[userCount].socialnetwork);
+    scanf("%s",&user[userCount].socialnetwork);
 
     userCount++;
     printf("User was added.\n");
