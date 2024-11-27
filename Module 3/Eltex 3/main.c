@@ -85,6 +85,62 @@ void addPerson(person *user) {
     printf("----------------------------------\n");
 }
 
+void deletePerson(person *user) {
+    int id;
+    printf("Enter ID person to delete: ");
+    scanf("%d", &id);
+
+    int index = -1;
+    for (int i = 0; i < userCount; i++) {
+        if (user[i].id == id) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        printf("Person with ID %d not found.\n", id);
+        return;
+    }
+
+    for (int i = index; i < userCount - 1; i++) {
+        user[i] = user[i + 1];
+    }
+
+    userCount--;
+    printf("Person with ID %d deleted.\n", id);
+}
+
+void editPerson(person *user) {
+    int id;
+    printf("Enter the ID of the person to edit: ");
+    scanf("%d", &id);
+    getchar();
+
+    int index = -1;
+    for (int i = 0; i < userCount; i++) {
+        if (user[i].id == id) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        printf("Person with ID %d not found.\n", id);
+        return;
+    }
+
+    printf("Enter new name: ");
+    fgets(user[index].name, MAX_LENGHT, stdin);
+    user[index].name[strcspn(user[index].name, "\n")] = '\0';
+
+    printf("Enter new surname: ");
+    fgets(user[index].surname, MAX_LENGHT, stdin);
+    user[index].surname[strcspn(user[index].surname, "\n")] = '\0';
+
+    printf("Person with ID %d updated.\n", id);
+}
+
 
 void trashDestroyer(person *user) {
     memset(user, 0, sizeof(person) * MAX_LENGHT_STRUCT);
@@ -104,7 +160,9 @@ int main(){
     {
         printf("-----Main Menu-----\n");
         printf("1. Add Person.\n");
-        printf("2. Save to File.\n");
+        printf("2. Delete Person.\n");
+        printf("3. Edit Person.\n");;
+        printf("4. Save to File.\n");
         printf("5. Exit.\n");
         printf("Choose an option.\n");
         scanf("%d",&expression);
@@ -114,6 +172,12 @@ int main(){
             addPerson(people);
             break;
         case 2:
+            deletePerson(people);
+            break;
+        case 3:
+            editPerson(people);
+            break;
+        case 4:
             saveToFile(people);
             break;
         case 5:
